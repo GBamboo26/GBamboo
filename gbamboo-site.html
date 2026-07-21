@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GBamboo — Automatización Inteligente. Resultados Globales.</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-black:#070b08;
+    --bg-deep:#0c130d;
+    --bg-panel:#101a11;
+    --green-bright:#9bd33f;
+    --green-mid:#6fae3a;
+    --green-deep:#244a1f;
+    --green-line:#2c4a26;
+    --white:#f3f6ee;
+    --grey:#9fb09a;
+    --grey-dim:#5c6b57;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--green-bright);color:var(--bg-black);}
+
+  .display{
+    font-family:'Big Shoulders Display',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-weight:800;
+    line-height:0.92;
+  }
+  .mono{
+    font-family:'Space Mono',monospace;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* background circuit-dot texture, echoes the globe motif in the logo */
+  .dot-field{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+    background-image:radial-gradient(circle, rgba(155,211,63,0.10) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(ellipse 70% 55% at 78% 18%, black 0%, transparent 70%);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(7,11,8,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--green-line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 32px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand img{height:38px;width:auto;display:block;}
+  .brand-word{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;
+    font-size:24px;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+  }
+  .brand-word .g{color:var(--green-bright);}
+  nav ul{
+    display:flex;
+    gap:36px;
+    list-style:none;
+  }
+  nav ul a{
+    font-size:13.5px;
+    letter-spacing:0.04em;
+    color:var(--grey);
+    transition:color .2s;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  nav ul a:hover{color:var(--green-bright);}
+  .nav-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 22px;
+    border:1px solid var(--green-mid);
+    border-radius:2px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    transition:all .2s;
+  }
+  .nav-cta:hover{background:var(--green-bright);border-color:var(--green-bright);color:var(--bg-black);}
+  .nav-toggle{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:120px 0 100px;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:50px;
+    align-items:center;
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:12px;
+    color:var(--green-bright);
+    margin-bottom:26px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards .1s;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px;height:7px;
+    background:var(--green-bright);
+    border-radius:50%;
+    box-shadow:0 0 10px var(--green-bright);
+  }
+  .hero h1{
+    font-size:clamp(46px, 6.2vw, 84px);
+    opacity:0;
+    animation:fadeUp .8s ease forwards .25s;
+  }
+  .hero h1 .accent{color:var(--green-bright);}
+  .hero p.lead{
+    margin-top:26px;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--grey);
+    max-width:480px;
+    opacity:0;
+    animation:fadeUp .8s ease forwards .42s;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    margin-top:40px;
+    flex-wrap:wrap;
+    opacity:0;
+    animation:fadeUp .8s ease forwards .58s;
+  }
+  .btn-primary{
+    padding:16px 30px;
+    background:var(--green-bright);
+    color:var(--bg-black);
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.02em;
+    border-radius:2px;
+    transition:transform .2s, box-shadow .2s;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(155,211,63,0.28);}
+  .btn-ghost{
+    padding:16px 28px;
+    border:1px solid var(--green-line);
+    border-radius:2px;
+    font-weight:600;
+    font-size:14.5px;
+    color:var(--white);
+    transition:border-color .2s, background .2s;
+  }
+  .btn-ghost:hover{border-color:var(--green-bright);background:rgba(155,211,63,0.06);}
+
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(18px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  /* growing bamboo stalk signature element */
+  .stalk-wrap{
+    position:relative;
+    height:520px;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .stalk{
+    position:relative;
+    width:64px;
+    height:0;
+    background:linear-gradient(180deg, var(--green-bright), var(--green-mid) 55%, var(--green-deep));
+    border-radius:8px;
+    animation:grow 1.6s cubic-bezier(.2,.8,.25,1) forwards .3s;
+    box-shadow:0 0 60px rgba(155,211,63,0.18);
+  }
+  @keyframes grow{
+    from{height:0;}
+    to{height:440px;}
+  }
+  .node{
+    position:absolute;
+    left:-10px;
+    width:84px;
+    height:10px;
+    background:var(--bg-black);
+    border-top:2px solid rgba(7,11,8,0.5);
+    opacity:0;
+    animation:nodeIn .4s ease forwards;
+  }
+  @keyframes nodeIn{ to{opacity:1;} }
+  .leafset{
+    position:absolute;
+    width:170px;
+    opacity:0;
+    animation:leafIn .6s ease forwards;
+  }
+  .leafset svg{width:100%;height:auto;display:block;}
+  @keyframes leafIn{
+    from{opacity:0;transform:translateX(-6px) rotate(-4deg);}
+    to{opacity:1;transform:translateX(0) rotate(0);}
+  }
+  .stat-floater{
+    position:absolute;
+    background:var(--bg-panel);
+    border:1px solid var(--green-line);
+    border-radius:3px;
+    padding:14px 18px;
+    opacity:0;
+    animation:fadeUp .7s ease forwards 1.9s;
+  }
+  .stat-floater .num{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;
+    font-size:30px;
+    color:var(--green-bright);
+    line-height:1;
+  }
+  .stat-floater .lab{
+    font-size:10.5px;
+    color:var(--grey);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .stat-1{top:60px; right:0;}
+  .stat-2{bottom:30px; left:-10px;}
+
+  @media (prefers-reduced-motion: reduce){
+    .stalk{animation:none;height:440px;}
+    .node,.leafset,.stat-floater,.eyebrow,.hero h1,.hero p.lead,.hero-actions{animation:none;opacity:1;}
+  }
+
+  /* ---------- NODE DIVIDER (bamboo joints as section divider) ---------- */
+  .joint-divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  .joint-divider .line{flex:1;height:1px;background:var(--green-line);}
+  .joint-divider .ring{
+    width:9px;height:9px;border:1.5px solid var(--green-mid);border-radius:50%;
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{position:relative;z-index:2;padding:110px 0;}
+  .section-head{
+    max-width:620px;
+    margin-bottom:64px;
+  }
+  .tag{
+    font-size:12px;
+    color:var(--green-bright);
+    margin-bottom:16px;
+    display:block;
+  }
+  .section-head h2{
+    font-size:clamp(34px,4vw,52px);
+  }
+  .section-head p{
+    margin-top:18px;
+    color:var(--grey);
+    font-size:16.5px;
+    line-height:1.65;
+  }
+
+  /* ---------- WHY BAMBOO STRIP ---------- */
+  .why{
+    background:var(--bg-deep);
+    border-top:1px solid var(--green-line);
+    border-bottom:1px solid var(--green-line);
+  }
+  .why-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .why-copy h3{
+    font-size:clamp(28px,3.4vw,40px);
+    margin-bottom:20px;
+  }
+  .why-copy p{
+    color:var(--grey);
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:16px;
+  }
+  .why-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--green-line);
+    border:1px solid var(--green-line);
+  }
+  .why-stat{
+    background:var(--bg-panel);
+    padding:34px 28px;
+  }
+  .why-stat .num{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;
+    font-size:48px;
+    color:var(--green-bright);
+    line-height:1;
+  }
+  .why-stat .lab{
+    margin-top:10px;
+    font-size:13px;
+    color:var(--grey);
+    line-height:1.5;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--green-line);
+    border:1px solid var(--green-line);
+  }
+  .service-card{
+    background:var(--bg-black);
+    padding:44px 36px;
+    transition:background .25s;
+    position:relative;
+  }
+  .service-card:hover{background:var(--bg-panel);}
+  .service-card .si{
+    width:46px;height:46px;
+    margin-bottom:26px;
+  }
+  .service-card .si svg{width:100%;height:100%;}
+  .service-card h3{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:700;
+    font-size:24px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    letter-spacing:0.01em;
+  }
+  .service-card p{
+    color:var(--grey);
+    font-size:14.5px;
+    line-height:1.65;
+  }
+  .service-card .num{
+    position:absolute;
+    top:38px;right:36px;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--grey-dim);
+  }
+
+  /* ---------- PROCESS (bamboo nodes = phased growth, a real sequence) ---------- */
+  .process{background:var(--bg-deep);border-top:1px solid var(--green-line);border-bottom:1px solid var(--green-line);}
+  .process-track{
+    position:relative;
+    padding-top:10px;
+  }
+  .process-line{
+    position:absolute;
+    top:29px;left:0;right:0;
+    height:2px;
+    background:var(--green-line);
+  }
+  .process-steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:30px;
+    position:relative;
+  }
+  .pstep .node-dot{
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--bg-deep);
+    border:2px solid var(--green-bright);
+    margin-bottom:26px;
+    position:relative;
+    box-shadow:0 0 0 4px var(--bg-deep);
+  }
+  .pstep .pnum{
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:var(--green-bright);
+    margin-bottom:10px;
+    display:block;
+  }
+  .pstep h4{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:700;
+    font-size:21px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .pstep p{
+    color:var(--grey);
+    font-size:14px;
+    line-height:1.6;
+  }
+
+  /* ---------- LOGO PANEL / TRUST ---------- */
+  .panel{
+    background:var(--bg-panel);
+    border:1px solid var(--green-line);
+    border-radius:4px;
+    padding:60px;
+    display:flex;
+    align-items:center;
+    gap:50px;
+  }
+  .panel img{height:130px;width:auto;flex-shrink:0;}
+  .panel-text h3{
+    font-size:clamp(24px,2.6vw,32px);
+    line-height:1.3;
+    margin-bottom:14px;
+  }
+  .panel-text p{color:var(--grey);font-size:15.5px;line-height:1.65;}
+
+  /* ---------- CTA ---------- */
+  .cta{
+    text-align:center;
+    padding:130px 0;
+  }
+  .cta h2{
+    font-size:clamp(38px,5.5vw,68px);
+    max-width:780px;
+    margin:0 auto 26px;
+  }
+  .cta p{
+    color:var(--grey);
+    font-size:17px;
+    max-width:520px;
+    margin:0 auto 44px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--green-line);
+    padding:50px 0 36px;
+  }
+  .foot-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:40px;
+  }
+  .foot-brand{display:flex;align-items:center;gap:10px;}
+  .foot-brand img{height:30px;}
+  .foot-brand span{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:19px;text-transform:uppercase;}
+  .foot-cols{display:flex;gap:70px;flex-wrap:wrap;}
+  .foot-col h5{
+    font-size:11.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--grey-dim);margin-bottom:16px;
+  }
+  .foot-col a, .foot-col p{
+    display:block;
+    font-size:14px;
+    color:var(--grey);
+    margin-bottom:10px;
+  }
+  .foot-col a:hover{color:var(--green-bright);}
+  .foot-bottom{
+    margin-top:50px;
+    padding-top:24px;
+    border-top:1px solid var(--green-line);
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--grey-dim);
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    nav ul{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .stalk-wrap{height:340px;margin-top:20px;}
+    .why-grid{grid-template-columns:1fr;}
+    .services-grid{grid-template-columns:1fr;}
+    .process-steps{grid-template-columns:1fr 1fr;}
+    .process-line{display:none;}
+    .panel{flex-direction:column;text-align:center;padding:44px 30px;}
+    .why-stats{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .process-steps{grid-template-columns:1fr;}
+    .nav-cta{display:none;}
+    .wrap{padding:0 20px;}
+    nav{padding:14px 20px;}
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--green-bright);
+    outline-offset:3px;
+  }
+
+  /* ---------- LEGAL TAB (Términos y Condiciones) ---------- */
+  .legal-tab{
+    position:fixed;
+    right:0;
+    top:50%;
+    transform:translateY(-50%) rotate(180deg);
+    writing-mode:vertical-rl;
+    background:var(--bg-panel);
+    border:1px solid var(--green-line);
+    border-right:none;
+    color:var(--grey);
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:16px 10px;
+    border-radius:6px 0 0 6px;
+    cursor:pointer;
+    z-index:60;
+    transition:background .2s, color .2s, padding .2s;
+  }
+  .legal-tab:hover{
+    background:var(--green-bright);
+    color:var(--bg-black);
+    padding-right:14px;
+  }
+  @media (max-width:560px){
+    .legal-tab{font-size:10px;padding:12px 8px;}
+  }
+
+  .legal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(7,11,8,0.78);
+    backdrop-filter:blur(4px);
+    z-index:99;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:32px 16px;
+  }
+  .legal-overlay.open{display:flex;}
+
+  .legal-modal{
+    position:relative;
+    width:100%;
+    max-width:820px;
+    max-height:86vh;
+    overflow-y:auto;
+    background:var(--bg-deep);
+    border:1px solid var(--green-line);
+    border-radius:8px;
+    padding:48px 44px 56px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .legal-modal::-webkit-scrollbar{width:8px;}
+  .legal-modal::-webkit-scrollbar-thumb{background:var(--green-line);border-radius:4px;}
+
+  .legal-close{
+    position:sticky;
+    top:0;
+    float:right;
+    margin:-8px -8px 0 0;
+    width:36px;height:36px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--bg-panel);
+    border:1px solid var(--green-line);
+    border-radius:50%;
+    color:var(--grey);
+    font-size:18px;
+    cursor:pointer;
+    transition:background .2s, color .2s;
+  }
+  .legal-close:hover{background:var(--green-bright);color:var(--bg-black);}
+
+  .legal-modal h2.display{
+    font-size:clamp(26px,4vw,38px);
+    margin-bottom:6px;
+    clear:both;
+  }
+  .legal-modal .legal-updated{
+    font-size:12px;
+    color:var(--green-bright);
+    margin-bottom:32px;
+    display:block;
+  }
+  .legal-modal h3{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    font-size:20px;
+    color:var(--green-bright);
+    margin:36px 0 12px;
+  }
+  .legal-modal h3:first-of-type{margin-top:8px;}
+  .legal-modal h4{
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--white);
+    margin:20px 0 8px;
+  }
+  .legal-modal p{
+    color:var(--grey);
+    font-size:14.5px;
+    line-height:1.7;
+    margin-bottom:12px;
+  }
+  .legal-modal ul{
+    margin:0 0 14px 20px;
+    color:var(--grey);
+    font-size:14.5px;
+    line-height:1.7;
+  }
+  .legal-modal li{margin-bottom:6px;}
+  .legal-modal strong{color:var(--white);}
+  .legal-modal a.legal-link{color:var(--green-bright);text-decoration:underline;}
+  .legal-modal .legal-divider{
+    height:1px;
+    background:var(--green-line);
+    margin:44px 0;
+    border:none;
+  }
+  .legal-modal .legal-note{
+    margin-top:36px;
+    padding:16px 18px;
+    background:var(--bg-panel);
+    border:1px solid var(--green-line);
+    border-radius:4px;
+    font-size:13px;
+    color:var(--grey);
+    font-style:italic;
+    line-height:1.6;
+  }
+  @media (max-width:560px){
+    .legal-modal{padding:36px 22px 44px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="dot-field"></div>
+
+<header>
+  <nav>
+    <div class="brand">
+      <img src="logo.png" alt="GBamboo logo">
+      <span class="brand-word"><span class="g">G</span>Bamboo</span>
+    </div>
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proceso">Proceso</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="#contacto" class="nav-cta">Hablemos</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow mono">Global Bamboo · IA &amp; Infraestructura Web</span>
+        <h1 class="display">Automatización<br><span class="accent">Inteligente.</span><br>Resultados<br>Globales.</h1>
+        <p class="lead">Implementamos inteligencia artificial dentro de tu operación y dejamos tu sitio web y alojamiento funcionando como deben: rápidos, estables y listos para crecer.</p>
+        <div class="hero-actions">
+          <a href="#contacto" class="btn-primary">Agenda una consultoría →</a>
+          <a href="#servicios" class="btn-ghost">Ver servicios</a>
+        </div>
+      </div>
+
+      <div class="stalk-wrap" aria-hidden="true">
+        <div class="stalk">
+          <div class="node" style="bottom:90px; animation-delay:.9s;"></div>
+          <div class="node" style="bottom:200px; animation-delay:1.15s;"></div>
+          <div class="node" style="bottom:320px; animation-delay:1.4s;"></div>
+          <div class="leafset" style="top:-58px; left:18px; animation-delay:1.7s;">
+            <svg viewBox="0 0 170 110" fill="none">
+              <path d="M85 90 C60 70 30 60 5 35 C40 40 65 55 85 90Z" fill="#6fae3a"/>
+              <path d="M85 90 C95 55 120 30 165 10 C145 40 120 60 85 90Z" fill="#9bd33f"/>
+              <path d="M85 90 C78 55 85 25 95 0 C100 35 95 65 85 90Z" fill="#7cc23f"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-floater stat-1">
+          <div class="num">+91cm o Tb/s</div>
+          <div class="lab">Crecimiento de tu proyecto como el bambú en un dia*</div>
+        </div>
+        <div class="stat-floater stat-2">
+          <div class="num">24/7</div>
+          <div class="lab">Soporte e infraestructura monitoreada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="joint-divider"><div class="line"></div><div class="ring"></div><div class="line"></div></div>
+
+  <!-- WHY BAMBOO -->
+  <section class="why">
+    <div class="wrap why-grid">
+      <div class="why-copy">
+        <span class="tag mono">Por qué bambú</span>
+        <h3 class="display">La planta que crece más rápido en la tierra, ahora es nuestro método.</h3>
+        <p>El bambú no improvisa su crecimiento: construye una raíz subterránea sólida antes de que algo sea visible en la superficie. Así trabajamos nosotros con la IA dentro de tu empresa.</p>
+        <p>Primero ordenamos los procesos, datos e infraestructura. Después, los resultados aparecen rápido — y se sostienen.</p>
+      </div>
+      <div class="why-stats">
+        <div class="why-stat">
+          <div class="num display">35M</div>
+          <div class="lab">Hectáreas de bambú en el planeta: la materia prima de la escalabilidad.</div>
+        </div>
+        <div class="why-stat">
+          <div class="num display">3-5</div>
+          <div class="lab">Años para que un bosque de bambú llegue a su madurez total.</div>
+        </div>
+        <div class="why-stat">
+          <div class="num display">+30%</div>
+          <div class="lab">Oxígeno liberado vs. otras plantas de tamaño similar.</div>
+        </div>
+        <div class="why-stat">
+          <div class="num display">100%</div>
+          <div class="lab">De nuestros proyectos incluyen monitoreo posterior al lanzamiento.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="servicios">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag mono">Servicios</span>
+        <h2 class="display">Tres raíces, un mismo sistema.</h2>
+        <p>No vendemos herramientas sueltas. Diseñamos la base técnica completa para que la inteligencia artificial funcione dentro de tu negocio sin fricción.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <span class="num">01</span>
+          <div class="si"><svg viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="21" stroke="#9bd33f" stroke-width="1.4"/><path d="M23 12v11l8 5" stroke="#9bd33f" stroke-width="1.6" stroke-linecap="round"/><circle cx="23" cy="23" r="3" fill="#9bd33f"/></svg></div>
+          <h3>Automatización con IA</h3>
+          <p>Diagnosticamos tus procesos repetitivos y diseñamos agentes y flujos automatizados que ahorran horas operativas reales, conectados a las herramientas que ya usas.</p>
+        </div>
+        <div class="service-card">
+          <span class="num">02</span>
+          <div class="si"><svg viewBox="0 0 46 46" fill="none"><rect x="6" y="10" width="34" height="22" rx="2" stroke="#9bd33f" stroke-width="1.4"/><path d="M14 38h18M23 32v6" stroke="#9bd33f" stroke-width="1.6" stroke-linecap="round"/><path d="M11 17h24" stroke="#9bd33f" stroke-width="1.2"/></svg></div>
+          <h3>Sitios web a la medida</h3>
+          <p>Configuramos y dejamos listo tu sitio web: estructura, velocidad de carga, integraciones y seguimiento. Tú apruebas, nosotros configuramos.</p>
+        </div>
+        <div class="service-card">
+          <span class="num">03</span>
+          <div class="si"><svg viewBox="0 0 46 46" fill="none"><path d="M23 6c9 6 9 28 0 34-9-6-9-28 0-34Z" stroke="#9bd33f" stroke-width="1.4"/><path d="M8 23h30" stroke="#9bd33f" stroke-width="1.2"/></svg></div>
+          <h3>Alojamiento y soporte</h3>
+          <p>Hosting gestionado, dominios, certificados y monitoreo continuo. Si algo se cae, lo vemos antes que tú — y lo resolvemos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="joint-divider"><div class="line"></div><div class="ring"></div><div class="line"></div></div>
+
+  <!-- PROCESS -->
+  <section class="process" id="proceso">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag mono">Cómo trabajamos</span>
+        <h2 class="display">Crecimiento por nudos, no de golpe.</h2>
+        <p>Igual que el tallo del bambú avanza nudo por nudo, cada etapa se cierra antes de abrir la siguiente — sin sorpresas a mitad de proyecto.</p>
+      </div>
+      <div class="process-track">
+        <div class="process-line"></div>
+        <div class="process-steps">
+          <div class="pstep">
+            <div class="node-dot"></div>
+            <span class="pnum">01 · Raíz</span>
+            <h4>Diagnóstico</h4>
+            <p>Auditamos procesos, sitio actual e infraestructura para identificar dónde la IA aporta más.</p>
+          </div>
+          <div class="pstep">
+            <div class="node-dot"></div>
+            <span class="pnum">02 · Tallo</span>
+            <h4>Implementación</h4>
+            <p>Configuramos automatizaciones, sitio y hosting con pruebas en cada paso del camino.</p>
+          </div>
+          <div class="pstep">
+            <div class="node-dot"></div>
+            <span class="pnum">03 · Brote</span>
+            <h4>Lanzamiento</h4>
+            <p>Salimos a producción con monitoreo activo desde el primer minuto.</p>
+          </div>
+          <div class="pstep">
+            <div class="node-dot"></div>
+            <span class="pnum">04 · Bosque</span>
+            <h4>Crecimiento</h4>
+            <p>Acompañamos, ajustamos y escalamos a medida que tu operación lo requiere.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST PANEL -->
+  <section id="nosotros">
+    <div class="wrap">
+      <div class="panel">
+        <img src="logo.png" alt="GBamboo logo">
+        <div class="panel-text">
+          <h3 class="display">Global Bamboo: una sola raíz, resultados en cualquier mercado.</h3>
+          <p>Trabajamos con empresas que quieren adoptar IA sin perder el control de su operación, y necesitan que su presencia web sea tan sólida como su estrategia. Un equipo, un mismo estándar técnico, sin importar el tamaño del proyecto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contacto">
+    <div class="wrap">
+      <span class="tag mono">Empecemos</span>
+      <h2 class="display">¿Listo para que tu operación crezca como bambú?</h2>
+      <p>Agenda una consultoría sin costo y te decimos, con honestidad, en dónde la IA va a tener más impacto en tu negocio.</p>
+      <a href="mailto:contacto@gbamboo.net" class="btn-primary">Escríbenos a contacto@gbamboo.net →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo.png" alt="GBamboo logo">
+        <span>GBamboo</span>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h5>Servicios</h5>
+          <a href="#servicios">Automatización con IA</a>
+          <a href="#servicios">Sitios web</a>
+          <a href="#servicios">Alojamiento y soporte</a>
+        </div>
+        <div class="foot-col">
+          <h5>Empresa</h5>
+          <a href="#proceso">Proceso</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div class="foot-col">
+          <h5>Contacto</h5>
+          <p>contacto@gbamboo.net</p>
+          <p>+52 33 0000 0000</p>
+          <a href='https://www.instagram.com/gbamboo.n3t/' target='_blank'>
+            Síguenos en Instagram
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 GBamboo · Global Bamboo. Todos los derechos reservados.</span>
+      <span>Automatización inteligente. Resultados globales.</span>
+      <a href="#" id="legalFooterLink" style="color:var(--grey-dim);">Términos, Condiciones y Aviso de Privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ---------- PESTAÑA + MODAL: TÉRMINOS Y CONDICIONES ---------- -->
+<button type="button" class="legal-tab mono" id="legalTabBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="legalOverlay">
+  Términos y Condiciones
+</button>
+
+<div class="legal-overlay" id="legalOverlay" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+  <div class="legal-modal">
+    <button type="button" class="legal-close" id="legalCloseBtn" aria-label="Cerrar">✕</button>
+
+    <h2 class="display" id="legalModalTitle">Términos y Condiciones</h2>
+    <span class="legal-updated mono">Última actualización: julio 2026</span>
+
+    <p><strong>GBamboo</strong> — Automatización Digital con Inteligencia Artificial. Sitio web: gbamboo.net | Contacto: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+
+    <h3>1. Objeto</h3>
+    <p>Estos Términos y Condiciones regulan el acceso y uso del sitio web GBamboo.net, así como la contratación de nuestros servicios de automatización digital, agentes de chat inteligente, sistemas CRM, integraciones y desarrollos relacionados (en conjunto, los "Servicios"). Al acceder al sitio o contratar cualquier Servicio, el usuario o cliente acepta estos Términos en su totalidad. Si no está de acuerdo, debe abstenerse de usar el sitio o contratar los Servicios.</p>
+
+    <h3>2. Descripción de los Servicios</h3>
+    <p>GBamboo ofrece, entre otros:</p>
+    <ul>
+      <li>Desarrollo de sitios web, hosting y dominio.</li>
+      <li>Agentes de chat inteligente (WhatsApp, Instagram, sitio web) impulsados por inteligencia artificial.</li>
+      <li>Plataformas de gestión de clientes (CRM).</li>
+      <li>Integraciones con sistemas de terceros (CRM, ERP, contabilidad, RH).</li>
+      <li>Analytics, reportes y automatización de flujos de trabajo (workflows).</li>
+    </ul>
+    <p>El alcance específico de cada Servicio se define en la propuesta comercial y/o contrato firmado con cada cliente.</p>
+
+    <h3>3. Cuentas y uso permitido</h3>
+    <ul>
+      <li>El cliente es responsable de la veracidad de la información que proporciona para la prestación del Servicio.</li>
+      <li>El cliente se compromete a no utilizar los Servicios para fines ilícitos, fraudulentos, o que infrinjan derechos de terceros.</li>
+      <li>Queda prohibido el uso de los agentes de chat inteligente para difundir spam, contenido engañoso, discriminatorio o que viole las políticas de las plataformas integradas (Meta, WhatsApp Business, etc.).</li>
+    </ul>
+
+    <h3>4. Propiedad intelectual y licenciamiento del sistema</h3>
+    <ul>
+      <li>El código fuente, la configuración técnica, los modelos de automatización y la arquitectura de los sistemas desarrollados por GBamboo (chatbots, CRM, workflows) son <strong>propiedad de GBamboo</strong>, salvo que se pacte lo contrario por escrito.</li>
+      <li>El cliente recibe una <strong>licencia de uso</strong> sobre el sistema mientras su mensualidad esté vigente y al corriente de pago.</li>
+      <li>Los <strong>datos propios del cliente</strong> (contactos, historial de conversaciones, información capturada en el CRM) le pertenecen al cliente y son exportables en formato estándar (CSV/Excel/JSON) en cualquier momento y, en todo caso, al finalizar la relación contractual.</li>
+      <li>Al finalizar o incumplirse el contrato de mensualidad, el acceso operativo al sistema se suspende. Existe opción de compra (buyout) del sistema conforme a lo pactado en el contrato de servicio correspondiente.</li>
+    </ul>
+
+    <h3>5. Recopilación de información</h3>
+    <p>GBamboo recopila información tanto de sus <strong>clientes directos</strong> (las empresas que contratan los Servicios) como de los <strong>usuarios finales</strong> que interactúan con los sistemas desarrollados (por ejemplo, personas que escriben a un chatbot de WhatsApp configurado para un cliente de GBamboo). El detalle de qué información se recopila, para qué se usa y cómo se protege se describe en nuestro Aviso de Privacidad, a continuación.</p>
+
+    <h3>6. Limitación de responsabilidad</h3>
+    <ul>
+      <li>GBamboo se compromete a operar los Servicios con estándares profesionales de seguridad y disponibilidad, pero no garantiza disponibilidad ininterrumpida al 100%, dado que los Servicios dependen de proveedores externos (AWS, Meta, OpenAI, entre otros).</li>
+      <li>GBamboo no es responsable por decisiones comerciales tomadas por el cliente con base en la información generada por los sistemas (reportes, analytics, respuestas del chatbot).</li>
+      <li>El cliente es responsable de obtener el consentimiento necesario de sus propios usuarios finales para el tratamiento de sus datos personales, conforme se detalla en el Aviso de Privacidad.</li>
+    </ul>
+
+    <h3>7. Vigencia y modificaciones</h3>
+    <p>GBamboo podrá modificar estos Términos y Condiciones en cualquier momento. Los cambios se publicarán en este sitio web con su fecha de actualización. El uso continuado de los Servicios tras la publicación de cambios implica su aceptación.</p>
+
+    <h3>8. Legislación aplicable</h3>
+    <p>Estos Términos se rigen por las leyes de los Estados Unidos Mexicanos, incluyendo la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y su Reglamento. Cualquier controversia se someterá a los tribunales competentes en Jalisco, México.</p>
+
+    <hr class="legal-divider">
+
+    <h2 class="display" style="font-size:clamp(24px,3.4vw,32px);">Aviso de Privacidad Integral</h2>
+    <p>En cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), GBamboo pone a disposición el presente Aviso de Privacidad.</p>
+
+    <h3>1. Identidad y domicilio del responsable</h3>
+    <p><strong>GBamboo</strong> es responsable del tratamiento de los datos personales recabados a través de su sitio web GBamboo.net y de los sistemas que administra para sus clientes. Contacto para temas de privacidad: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+
+    <h3>2. Datos personales que recabamos</h3>
+    <h4>a) De nuestros clientes (empresas que contratan Servicios)</h4>
+    <ul>
+      <li>Datos de contacto: nombre, correo electrónico, teléfono, empresa, puesto.</li>
+      <li>Datos de facturación.</li>
+      <li>Información del negocio necesaria para configurar los sistemas (procesos internos, catálogos, políticas de atención).</li>
+    </ul>
+    <h4>b) De los usuarios finales que interactúan con los sistemas de nuestros clientes</h4>
+    <p>Cuando una persona interactúa con un chatbot, formulario web o sistema de agendamiento configurado por GBamboo para uno de nuestros clientes, podemos recabar:</p>
+    <ul>
+      <li>Nombre, número de teléfono o cuenta de WhatsApp/Instagram.</li>
+      <li>Contenido de las conversaciones sostenidas con el agente de chat.</li>
+      <li>Correo electrónico (si se proporciona para agendar citas o recibir información).</li>
+      <li>Preferencias e información proporcionada durante la conversación, utilizada para personalizar la atención (por ejemplo: intereses, historial de solicitudes, respuestas a preguntas de calificación de lead).</li>
+      <li>Metadatos técnicos (fecha, hora, canal de contacto).</li>
+    </ul>
+    <p><strong>Importante:</strong> GBamboo trata estos datos en su carácter de <strong>encargado</strong> del tratamiento, actuando por cuenta y bajo instrucciones de nuestro cliente (la empresa con la que el usuario final interactúa), quien es el responsable principal de dicha relación. Cada cliente de GBamboo es responsable de contar con su propio aviso de privacidad frente a sus usuarios finales, y GBamboo se compromete a tratar esos datos únicamente para los fines que el cliente autorice.</p>
+
+    <h3>3. Finalidades del tratamiento</h3>
+    <p><strong>Finalidades primarias (necesarias para el Servicio):</strong></p>
+    <ul>
+      <li>Prestar y operar los Servicios contratados (hosting, chatbot, CRM, integraciones).</li>
+      <li>Dar seguimiento y soporte técnico.</li>
+      <li>Personalizar la atención brindada por los agentes de chat inteligente (por ejemplo, recordar el contexto de una conversación o preferencias previas del usuario).</li>
+      <li>Facturación y cumplimiento de obligaciones fiscales.</li>
+    </ul>
+    <p><strong>Finalidades secundarias (opcionales):</strong></p>
+    <ul>
+      <li>Envío de comunicaciones sobre nuevos servicios o mejoras.</li>
+      <li>Elaboración de reportes estadísticos y analíticos agregados (sin identificar a personas individuales).</li>
+    </ul>
+    <p>El usuario puede oponerse a las finalidades secundarias en cualquier momento escribiendo a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a>.</p>
+
+    <h3>4. Transferencias y encargados de tratamiento</h3>
+    <p>Para operar los Servicios, GBamboo utiliza proveedores tecnológicos que procesan datos como parte de la infraestructura (encargados de tratamiento), entre ellos:</p>
+    <ul>
+      <li><strong>Amazon Web Services (AWS):</strong> hosting, almacenamiento y respaldo de datos.</li>
+      <li><strong>OpenAI (ChatGPT):</strong> procesamiento de lenguaje natural para generar respuestas del agente de chat.</li>
+      <li><strong>Meta (WhatsApp Business, Instagram):</strong> transmisión de mensajes a través de sus plataformas.</li>
+    </ul>
+    <p>Estos proveedores procesan la información únicamente para permitir la operación del Servicio y están sujetos a sus propias políticas de privacidad y estándares de seguridad. GBamboo no vende ni renta datos personales a terceros con fines publicitarios.</p>
+
+    <h3>5. Almacenamiento y seguridad</h3>
+    <p>Los datos se almacenan en servidores con cifrado, respaldo automático y controles de acceso. Se conservan durante la vigencia de la relación contractual con el cliente correspondiente y, posteriormente, durante el plazo que exijan las obligaciones legales aplicables, salvo solicitud de cancelación por parte del titular.</p>
+
+    <h3>6. Derechos ARCO</h3>
+    <p>El titular de los datos (cliente o usuario final) tiene derecho a <strong>Acceder, Rectificar, Cancelar u Oponerse</strong> (derechos ARCO) al tratamiento de sus datos personales, así como a revocar su consentimiento en cualquier momento. Para ejercer estos derechos, puede escribir a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a> indicando:</p>
+    <ul>
+      <li>Nombre completo y datos de contacto.</li>
+      <li>Descripción clara del dato personal sobre el cual se ejerce el derecho.</li>
+      <li>Documento que acredite su identidad, en su caso.</li>
+    </ul>
+    <p>GBamboo responderá en un plazo no mayor a 20 días hábiles, conforme lo establece la LFPDPPP. Cuando el dato haya sido recabado a través de un sistema operado para un cliente específico, GBamboo podrá canalizar la solicitud al cliente responsable cuando corresponda, y así lo notificará al titular.</p>
+
+    <h3>7. Uso de cookies y tecnologías de rastreo</h3>
+    <p>El sitio web GBamboo.net puede utilizar cookies y tecnologías similares (por ejemplo, Google Analytics) para mejorar la experiencia de navegación y analizar el uso del sitio. El usuario puede deshabilitar las cookies desde la configuración de su navegador; esto podría afectar algunas funcionalidades del sitio.</p>
+
+    <h3>8. Cambios al Aviso de Privacidad</h3>
+    <p>Este Aviso de Privacidad puede actualizarse para reflejar cambios en nuestros Servicios, en la legislación aplicable o en las prácticas de nuestros proveedores. La versión vigente estará siempre disponible en GBamboo.net.</p>
+
+    <h3>9. Contacto</h3>
+    <p>Para dudas, solicitudes o ejercicio de derechos ARCO relacionados con el tratamiento de datos personales:<br>
+    Correo electrónico: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a><br>
+    Sitio web: gbamboo.net</p>
+
+    
+  </div>
+</div>
+
+<script>
+  (function(){
+    var overlay = document.getElementById('legalOverlay');
+    var tabBtn = document.getElementById('legalTabBtn');
+    var closeBtn = document.getElementById('legalCloseBtn');
+    var footerLink = document.getElementById('legalFooterLink');
+
+    function openLegal(e){
+      if(e) e.preventDefault();
+      overlay.classList.add('open');
+      tabBtn.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+      overlay.querySelector('.legal-modal').scrollTop = 0;
+    }
+    function closeLegal(){
+      overlay.classList.remove('open');
+      tabBtn.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+
+    tabBtn.addEventListener('click', openLegal);
+    if(footerLink) footerLink.addEventListener('click', openLegal);
+    closeBtn.addEventListener('click', closeLegal);
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeLegal();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('open')) closeLegal();
+    });
+  })();
+</script>
+
+</body>
+</html>
