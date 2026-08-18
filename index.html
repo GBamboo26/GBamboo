@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -687,6 +687,43 @@
   @media (max-width:560px){
     .legal-modal{padding:36px 22px 44px;}
   }
+
+  /* ---------- LANGUAGE TOGGLE ---------- */
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .lang-toggle{
+    display:inline-flex;
+    border:1px solid var(--green-line);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .lang-toggle button{
+    appearance:none;
+    background:transparent;
+    border:none;
+    color:var(--grey);
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:8px 12px;
+    cursor:pointer;
+    transition:background .2s,color .2s;
+  }
+  .lang-toggle button + button{border-left:1px solid var(--green-line);}
+  .lang-toggle button:hover{color:var(--green-bright);}
+  .lang-toggle button.active{
+    background:var(--green-bright);
+    color:var(--bg-black);
+    font-weight:700;
+  }
+  /* legal content: two language blocks, only one visible */
+  .legal-lang{display:none;}
+  html[data-lang="es"] .legal-lang.lang-es{display:block;}
+  html[data-lang="en"] .legal-lang.lang-en{display:block;}
+  @media (max-width:760px){
+    .nav-right{gap:10px;}
+    .lang-toggle button{padding:7px 9px;font-size:11px;}
+  }
 </style>
 </head>
 <body>
@@ -700,12 +737,18 @@
       <span class="brand-word"><span class="g">G</span>Bamboo</span>
     </div>
     <ul>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#nosotros">Nosotros</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#servicios" data-i18n="nav_services">Servicios</a></li>
+      <li><a href="#proceso" data-i18n="nav_process">Proceso</a></li>
+      <li><a href="#nosotros" data-i18n="nav_about">Nosotros</a></li>
+      <li><a href="#contacto" data-i18n="nav_contact">Contacto</a></li>
     </ul>
-    <a href="#contacto" class="nav-cta">Hablemos</a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+        <button type="button" id="langEsBtn" class="active" aria-pressed="true">ES</button>
+        <button type="button" id="langEnBtn" aria-pressed="false">EN</button>
+      </div>
+      <a href="#contacto" class="nav-cta" data-i18n="nav_cta">Hablemos</a>
+    </div>
   </nav>
 </header>
 
@@ -714,12 +757,12 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow mono">Global Bamboo · IA &amp; Infraestructura Web</span>
-        <h1 class="display">Automatización<br><span class="accent">Inteligente.</span><br>Resultados<br>Globales.</h1>
-        <p class="lead">Implementamos inteligencia artificial dentro de tu operación y dejamos tu sitio web y alojamiento funcionando como deben: rápidos, estables y listos para crecer.</p>
+        <span class="eyebrow mono" data-i18n="hero_eyebrow">Global Bamboo &middot; IA &amp; Infraestructura Web</span>
+        <h1 class="display" data-i18n="hero_h1">Automatización<br><span class="accent">Inteligente.</span><br>Resultados<br>Globales.</h1>
+        <p class="lead" data-i18n="hero_lead">Implementamos inteligencia artificial dentro de tu operación y dejamos tu sitio web y alojamiento funcionando como deben: rápidos, estables y listos para crecer.</p>
         <div class="hero-actions">
-          <a href="#contacto" class="btn-primary">Agenda una consultoría →</a>
-          <a href="#servicios" class="btn-ghost">Ver servicios</a>
+          <a href="#contacto" class="btn-primary" data-i18n="hero_btn1">Agenda una consultoría →</a>
+          <a href="#servicios" class="btn-ghost" data-i18n="hero_btn2">Ver servicios</a>
         </div>
       </div>
 
@@ -738,11 +781,11 @@
         </div>
         <div class="stat-floater stat-1">
           <div class="num">+91cm o Tb/s</div>
-          <div class="lab">Crecimiento de tu proyecto como el bambú en un dia*</div>
+          <div class="lab" data-i18n="stat1_lab">Crecimiento de tu proyecto como el bambú en un dia*</div>
         </div>
         <div class="stat-floater stat-2">
           <div class="num">24/7</div>
-          <div class="lab">Soporte e infraestructura monitoreada</div>
+          <div class="lab" data-i18n="stat2_lab">Soporte e infraestructura monitoreada</div>
         </div>
       </div>
     </div>
@@ -754,27 +797,27 @@
   <section class="why">
     <div class="wrap why-grid">
       <div class="why-copy">
-        <span class="tag mono">Por qué bambú</span>
-        <h3 class="display">La planta que crece más rápido en la tierra, ahora es nuestro método.</h3>
-        <p>El bambú no improvisa su crecimiento: construye una raíz subterránea sólida antes de que algo sea visible en la superficie. Así trabajamos nosotros con la IA dentro de tu empresa.</p>
-        <p>Primero ordenamos los procesos, datos e infraestructura. Después, los resultados aparecen rápido — y se sostienen.</p>
+        <span class="tag mono" data-i18n="why_tag">Por qué bambú</span>
+        <h3 class="display" data-i18n="why_h3">La planta que crece más rápido en la tierra, ahora es nuestro método.</h3>
+        <p data-i18n="why_p1">El bambú no improvisa su crecimiento: construye una raíz subterránea sólida antes de que algo sea visible en la superficie. Así trabajamos nosotros con la IA dentro de tu empresa.</p>
+        <p data-i18n="why_p2">Primero ordenamos los procesos, datos e infraestructura. Después, los resultados aparecen rápido — y se sostienen.</p>
       </div>
       <div class="why-stats">
         <div class="why-stat">
           <div class="num display">35M</div>
-          <div class="lab">Hectáreas de bambú en el planeta: la materia prima de la escalabilidad.</div>
+          <div class="lab" data-i18n="ws1">Hectáreas de bambú en el planeta: la materia prima de la escalabilidad.</div>
         </div>
         <div class="why-stat">
           <div class="num display">3-5</div>
-          <div class="lab">Años para que un bosque de bambú llegue a su madurez total.</div>
+          <div class="lab" data-i18n="ws2">Años para que un bosque de bambú llegue a su madurez total.</div>
         </div>
         <div class="why-stat">
           <div class="num display">+30%</div>
-          <div class="lab">Oxígeno liberado vs. otras plantas de tamaño similar.</div>
+          <div class="lab" data-i18n="ws3">Oxígeno liberado vs. otras plantas de tamaño similar.</div>
         </div>
         <div class="why-stat">
           <div class="num display">100%</div>
-          <div class="lab">De nuestros proyectos incluyen monitoreo posterior al lanzamiento.</div>
+          <div class="lab" data-i18n="ws4">De nuestros proyectos incluyen monitoreo posterior al lanzamiento.</div>
         </div>
       </div>
     </div>
@@ -784,29 +827,29 @@
   <section id="servicios">
     <div class="wrap">
       <div class="section-head">
-        <span class="tag mono">Servicios</span>
-        <h2 class="display">Tres raíces, un mismo sistema.</h2>
-        <p>No vendemos herramientas sueltas. Diseñamos la base técnica completa para que la inteligencia artificial funcione dentro de tu negocio sin fricción.</p>
+        <span class="tag mono" data-i18n="srv_tag">Servicios</span>
+        <h2 class="display" data-i18n="srv_h2">Tres raíces, un mismo sistema.</h2>
+        <p data-i18n="srv_p">No vendemos herramientas sueltas. Diseñamos la base técnica completa para que la inteligencia artificial funcione dentro de tu negocio sin fricción.</p>
       </div>
 
       <div class="services-grid">
         <div class="service-card">
           <span class="num">01</span>
           <div class="si"><svg viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="21" stroke="#9bd33f" stroke-width="1.4"/><path d="M23 12v11l8 5" stroke="#9bd33f" stroke-width="1.6" stroke-linecap="round"/><circle cx="23" cy="23" r="3" fill="#9bd33f"/></svg></div>
-          <h3>Automatización con IA</h3>
-          <p>Diagnosticamos tus procesos repetitivos y diseñamos agentes y flujos automatizados que ahorran horas operativas reales, conectados a las herramientas que ya usas.</p>
+          <h3 data-i18n="s1_h">Automatización con IA</h3>
+          <p data-i18n="s1_p">Diagnosticamos tus procesos repetitivos y diseñamos agentes y flujos automatizados que ahorran horas operativas reales, conectados a las herramientas que ya usas.</p>
         </div>
         <div class="service-card">
           <span class="num">02</span>
           <div class="si"><svg viewBox="0 0 46 46" fill="none"><rect x="6" y="10" width="34" height="22" rx="2" stroke="#9bd33f" stroke-width="1.4"/><path d="M14 38h18M23 32v6" stroke="#9bd33f" stroke-width="1.6" stroke-linecap="round"/><path d="M11 17h24" stroke="#9bd33f" stroke-width="1.2"/></svg></div>
-          <h3>Sitios web a la medida</h3>
-          <p>Configuramos y dejamos listo tu sitio web: estructura, velocidad de carga, integraciones y seguimiento. Tú apruebas, nosotros configuramos.</p>
+          <h3 data-i18n="s2_h">Sitios web a la medida</h3>
+          <p data-i18n="s2_p">Configuramos y dejamos listo tu sitio web: estructura, velocidad de carga, integraciones y seguimiento. Tú apruebas, nosotros configuramos.</p>
         </div>
         <div class="service-card">
           <span class="num">03</span>
           <div class="si"><svg viewBox="0 0 46 46" fill="none"><path d="M23 6c9 6 9 28 0 34-9-6-9-28 0-34Z" stroke="#9bd33f" stroke-width="1.4"/><path d="M8 23h30" stroke="#9bd33f" stroke-width="1.2"/></svg></div>
-          <h3>Alojamiento y soporte</h3>
-          <p>Hosting gestionado, dominios, certificados y monitoreo continuo. Si algo se cae, lo vemos antes que tú — y lo resolvemos.</p>
+          <h3 data-i18n="s3_h">Alojamiento y soporte</h3>
+          <p data-i18n="s3_p">Hosting gestionado, dominios, certificados y monitoreo continuo. Si algo se cae, lo vemos antes que tú — y lo resolvemos.</p>
         </div>
       </div>
     </div>
@@ -818,36 +861,36 @@
   <section class="process" id="proceso">
     <div class="wrap">
       <div class="section-head">
-        <span class="tag mono">Cómo trabajamos</span>
-        <h2 class="display">Crecimiento por nudos, no de golpe.</h2>
-        <p>Igual que el tallo del bambú avanza nudo por nudo, cada etapa se cierra antes de abrir la siguiente — sin sorpresas a mitad de proyecto.</p>
+        <span class="tag mono" data-i18n="proc_tag">Cómo trabajamos</span>
+        <h2 class="display" data-i18n="proc_h2">Crecimiento por nudos, no de golpe.</h2>
+        <p data-i18n="proc_p">Igual que el tallo del bambú avanza nudo por nudo, cada etapa se cierra antes de abrir la siguiente — sin sorpresas a mitad de proyecto.</p>
       </div>
       <div class="process-track">
         <div class="process-line"></div>
         <div class="process-steps">
           <div class="pstep">
             <div class="node-dot"></div>
-            <span class="pnum">01 · Raíz</span>
-            <h4>Diagnóstico</h4>
-            <p>Auditamos procesos, sitio actual e infraestructura para identificar dónde la IA aporta más.</p>
+            <span class="pnum" data-i18n="p1_num">01 · Raíz</span>
+            <h4 data-i18n="p1_h">Diagnóstico</h4>
+            <p data-i18n="p1_p">Auditamos procesos, sitio actual e infraestructura para identificar dónde la IA aporta más.</p>
           </div>
           <div class="pstep">
             <div class="node-dot"></div>
-            <span class="pnum">02 · Tallo</span>
-            <h4>Implementación</h4>
-            <p>Configuramos automatizaciones, sitio y hosting con pruebas en cada paso del camino.</p>
+            <span class="pnum" data-i18n="p2_num">02 · Tallo</span>
+            <h4 data-i18n="p2_h">Implementación</h4>
+            <p data-i18n="p2_p">Configuramos automatizaciones, sitio y hosting con pruebas en cada paso del camino.</p>
           </div>
           <div class="pstep">
             <div class="node-dot"></div>
-            <span class="pnum">03 · Brote</span>
-            <h4>Lanzamiento</h4>
-            <p>Salimos a producción con monitoreo activo desde el primer minuto.</p>
+            <span class="pnum" data-i18n="p3_num">03 · Brote</span>
+            <h4 data-i18n="p3_h">Lanzamiento</h4>
+            <p data-i18n="p3_p">Salimos a producción con monitoreo activo desde el primer minuto.</p>
           </div>
           <div class="pstep">
             <div class="node-dot"></div>
-            <span class="pnum">04 · Bosque</span>
-            <h4>Crecimiento</h4>
-            <p>Acompañamos, ajustamos y escalamos a medida que tu operación lo requiere.</p>
+            <span class="pnum" data-i18n="p4_num">04 · Bosque</span>
+            <h4 data-i18n="p4_h">Crecimiento</h4>
+            <p data-i18n="p4_p">Acompañamos, ajustamos y escalamos a medida que tu operación lo requiere.</p>
           </div>
         </div>
       </div>
@@ -860,8 +903,8 @@
       <div class="panel">
         <img src="logo.png" alt="GBamboo logo">
         <div class="panel-text">
-          <h3 class="display">Global Bamboo: una sola raíz, resultados en cualquier mercado.</h3>
-          <p>Trabajamos con empresas que quieren adoptar IA sin perder el control de su operación, y necesitan que su presencia web sea tan sólida como su estrategia. Un equipo, un mismo estándar técnico, sin importar el tamaño del proyecto.</p>
+          <h3 class="display" data-i18n="panel_h3">Global Bamboo: una sola raíz, resultados en cualquier mercado.</h3>
+          <p data-i18n="panel_p">Trabajamos con empresas que quieren adoptar IA sin perder el control de su operación, y necesitan que su presencia web sea tan sólida como su estrategia. Un equipo, un mismo estándar técnico, sin importar el tamaño del proyecto.</p>
         </div>
       </div>
     </div>
@@ -870,10 +913,10 @@
   <!-- CTA -->
   <section class="cta" id="contacto">
     <div class="wrap">
-      <span class="tag mono">Empecemos</span>
-      <h2 class="display">¿Listo para que tu operación crezca como bambú?</h2>
-      <p>Agenda una consultoría sin costo y te decimos, con honestidad, en dónde la IA va a tener más impacto en tu negocio.</p>
-      <a href="mailto:contacto@gbamboo.net" class="btn-primary">Escríbenos a contacto@gbamboo.net →</a>
+      <span class="tag mono" data-i18n="cta_tag">Empecemos</span>
+      <h2 class="display" data-i18n="cta_h2">¿Listo para que tu operación crezca como bambú?</h2>
+      <p data-i18n="cta_p">Agenda una consultoría sin costo y te decimos, con honestidad, en dónde la IA va a tener más impacto en tu negocio.</p>
+      <a href="mailto:contacto@gbamboo.net" class="btn-primary" data-i18n="cta_btn">Escríbenos a contacto@gbamboo.net →</a>
     </div>
   </section>
 </main>
@@ -887,37 +930,37 @@
       </div>
       <div class="foot-cols">
         <div class="foot-col">
-          <h5>Servicios</h5>
-          <a href="#servicios">Automatización con IA</a>
-          <a href="#servicios">Sitios web</a>
-          <a href="#servicios">Alojamiento y soporte</a>
+          <h5 data-i18n="f_services">Servicios</h5>
+          <a href="#servicios" data-i18n="f_s1">Automatización con IA</a>
+          <a href="#servicios" data-i18n="f_s2">Sitios web</a>
+          <a href="#servicios" data-i18n="f_s3">Alojamiento y soporte</a>
         </div>
         <div class="foot-col">
-          <h5>Empresa</h5>
-          <a href="#proceso">Proceso</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#contacto">Contacto</a>
+          <h5 data-i18n="f_company">Empresa</h5>
+          <a href="#proceso" data-i18n="nav_process">Proceso</a>
+          <a href="#nosotros" data-i18n="nav_about">Nosotros</a>
+          <a href="#contacto" data-i18n="nav_contact">Contacto</a>
         </div>
         <div class="foot-col">
-          <h5>Contacto</h5>
+          <h5 data-i18n="f_contact">Contacto</h5>
           <p>contacto@gbamboo.net</p>
           <p>+52 33 1608 3234</p>
-          <a href='https://www.instagram.com/gbamboo.n3t/' target='_blank'>
+          <a href='https://www.instagram.com/gbamboo.n3t/' target='_blank' data-i18n="f_ig">
             Síguenos en Instagram
           </a>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 GBamboo · Global Bamboo. Todos los derechos reservados.</span>
-      <span>Automatización inteligente. Resultados globales.</span>
-      <a href="#" id="legalFooterLink" style="color:var(--grey-dim);">Términos, Condiciones y Aviso de Privacidad</a>
+      <span data-i18n="f_copy">© 2026 GBamboo · Global Bamboo. Todos los derechos reservados.</span>
+      <span data-i18n="f_tag">Automatización inteligente. Resultados globales.</span>
+      <a href="#" id="legalFooterLink" style="color:var(--grey-dim);" data-i18n="f_legal">Términos, Condiciones y Aviso de Privacidad</a>
     </div>
   </div>
 </footer>
 
 <!-- ---------- PESTAÑA + MODAL: TÉRMINOS Y CONDICIONES ---------- -->
-<button type="button" class="legal-tab mono" id="legalTabBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="legalOverlay">
+<button type="button" class="legal-tab mono" id="legalTabBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="legalOverlay" data-i18n="legal_tab">
   Términos y Condiciones
 </button>
 
@@ -925,134 +968,263 @@
   <div class="legal-modal">
     <button type="button" class="legal-close" id="legalCloseBtn" aria-label="Cerrar">✕</button>
 
-    <h2 class="display" id="legalModalTitle">Términos y Condiciones</h2>
-    <span class="legal-updated mono">Última actualización: julio 2026</span>
+    <!-- ================= ESPAÑOL ================= -->
+    <div class="legal-lang lang-es">
+      <h2 class="display" id="legalModalTitle">Términos y Condiciones</h2>
+      <span class="legal-updated mono">Última actualización: julio 2026</span>
 
-    <p><strong>GBamboo</strong> — Automatización Digital con Inteligencia Artificial. Sitio web: gbamboo.net | Contacto: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+      <p><strong>GBamboo</strong> — Automatización Digital con Inteligencia Artificial. Sitio web: gbamboo.net | Contacto: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
 
-    <h3>1. Objeto</h3>
-    <p>Estos Términos y Condiciones regulan el acceso y uso del sitio web GBamboo.net, así como la contratación de nuestros servicios de automatización digital, agentes de chat inteligente, sistemas CRM, integraciones y desarrollos relacionados (en conjunto, los "Servicios"). Al acceder al sitio o contratar cualquier Servicio, el usuario o cliente acepta estos Términos en su totalidad. Si no está de acuerdo, debe abstenerse de usar el sitio o contratar los Servicios.</p>
+      <h3>1. Objeto</h3>
+      <p>Estos Términos y Condiciones regulan el acceso y uso del sitio web GBamboo.net, así como la contratación de nuestros servicios de automatización digital, agentes de chat inteligente, sistemas CRM, integraciones y desarrollos relacionados (en conjunto, los "Servicios"). Al acceder al sitio o contratar cualquier Servicio, el usuario o cliente acepta estos Términos en su totalidad. Si no está de acuerdo, debe abstenerse de usar el sitio o contratar los Servicios.</p>
 
-    <h3>2. Descripción de los Servicios</h3>
-    <p>GBamboo ofrece, entre otros:</p>
-    <ul>
-      <li>Desarrollo de sitios web, hosting y dominio.</li>
-      <li>Agentes de chat inteligente (WhatsApp, Instagram, sitio web) impulsados por inteligencia artificial.</li>
-      <li>Plataformas de gestión de clientes (CRM).</li>
-      <li>Integraciones con sistemas de terceros (CRM, ERP, contabilidad, RH).</li>
-      <li>Analytics, reportes y automatización de flujos de trabajo (workflows).</li>
-    </ul>
-    <p>El alcance específico de cada Servicio se define en la propuesta comercial y/o contrato firmado con cada cliente.</p>
+      <h3>2. Descripción de los Servicios</h3>
+      <p>GBamboo ofrece, entre otros:</p>
+      <ul>
+        <li>Desarrollo de sitios web, hosting y dominio.</li>
+        <li>Agentes de chat inteligente (WhatsApp, Instagram, sitio web) impulsados por inteligencia artificial.</li>
+        <li>Plataformas de gestión de clientes (CRM).</li>
+        <li>Integraciones con sistemas de terceros (CRM, ERP, contabilidad, RH).</li>
+        <li>Analytics, reportes y automatización de flujos de trabajo (workflows).</li>
+      </ul>
+      <p>El alcance específico de cada Servicio se define en la propuesta comercial y/o contrato firmado con cada cliente.</p>
 
-    <h3>3. Cuentas y uso permitido</h3>
-    <ul>
-      <li>El cliente es responsable de la veracidad de la información que proporciona para la prestación del Servicio.</li>
-      <li>El cliente se compromete a no utilizar los Servicios para fines ilícitos, fraudulentos, o que infrinjan derechos de terceros.</li>
-      <li>Queda prohibido el uso de los agentes de chat inteligente para difundir spam, contenido engañoso, discriminatorio o que viole las políticas de las plataformas integradas (Meta, WhatsApp Business, etc.).</li>
-    </ul>
+      <h3>3. Cuentas y uso permitido</h3>
+      <ul>
+        <li>El cliente es responsable de la veracidad de la información que proporciona para la prestación del Servicio.</li>
+        <li>El cliente se compromete a no utilizar los Servicios para fines ilícitos, fraudulentos, o que infrinjan derechos de terceros.</li>
+        <li>Queda prohibido el uso de los agentes de chat inteligente para difundir spam, contenido engañoso, discriminatorio o que viole las políticas de las plataformas integradas (Meta, WhatsApp Business, etc.).</li>
+      </ul>
 
-    <h3>4. Propiedad intelectual y licenciamiento del sistema</h3>
-    <ul>
-      <li>El código fuente, la configuración técnica, los modelos de automatización y la arquitectura de los sistemas desarrollados por GBamboo (chatbots, CRM, workflows) son <strong>propiedad de GBamboo</strong>, salvo que se pacte lo contrario por escrito.</li>
-      <li>El cliente recibe una <strong>licencia de uso</strong> sobre el sistema mientras su mensualidad esté vigente y al corriente de pago.</li>
-      <li>Los <strong>datos propios del cliente</strong> (contactos, historial de conversaciones, información capturada en el CRM) le pertenecen al cliente y son exportables en formato estándar (CSV/Excel/JSON) en cualquier momento y, en todo caso, al finalizar la relación contractual.</li>
-      <li>Al finalizar o incumplirse el contrato de mensualidad, el acceso operativo al sistema se suspende. Existe opción de compra (buyout) del sistema conforme a lo pactado en el contrato de servicio correspondiente.</li>
-    </ul>
+      <h3>4. Propiedad intelectual y licenciamiento del sistema</h3>
+      <ul>
+        <li>El código fuente, la configuración técnica, los modelos de automatización y la arquitectura de los sistemas desarrollados por GBamboo (chatbots, CRM, workflows) son <strong>propiedad de GBamboo</strong>, salvo que se pacte lo contrario por escrito.</li>
+        <li>El cliente recibe una <strong>licencia de uso</strong> sobre el sistema mientras su mensualidad esté vigente y al corriente de pago.</li>
+        <li>Los <strong>datos propios del cliente</strong> (contactos, historial de conversaciones, información capturada en el CRM) le pertenecen al cliente y son exportables en formato estándar (CSV/Excel/JSON) en cualquier momento y, en todo caso, al finalizar la relación contractual.</li>
+        <li>Al finalizar o incumplirse el contrato de mensualidad, el acceso operativo al sistema se suspende. Existe opción de compra (buyout) del sistema conforme a lo pactado en el contrato de servicio correspondiente.</li>
+      </ul>
 
-    <h3>5. Recopilación de información</h3>
-    <p>GBamboo recopila información tanto de sus <strong>clientes directos</strong> (las empresas que contratan los Servicios) como de los <strong>usuarios finales</strong> que interactúan con los sistemas desarrollados (por ejemplo, personas que escriben a un chatbot de WhatsApp configurado para un cliente de GBamboo). El detalle de qué información se recopila, para qué se usa y cómo se protege se describe en nuestro Aviso de Privacidad, a continuación.</p>
+      <h3>5. Recopilación de información</h3>
+      <p>GBamboo recopila información tanto de sus <strong>clientes directos</strong> (las empresas que contratan los Servicios) como de los <strong>usuarios finales</strong> que interactúan con los sistemas desarrollados (por ejemplo, personas que escriben a un chatbot de WhatsApp configurado para un cliente de GBamboo). El detalle de qué información se recopila, para qué se usa y cómo se protege se describe en nuestro Aviso de Privacidad, a continuación.</p>
 
-    <h3>6. Limitación de responsabilidad</h3>
-    <ul>
-      <li>GBamboo se compromete a operar los Servicios con estándares profesionales de seguridad y disponibilidad, pero no garantiza disponibilidad ininterrumpida al 100%, dado que los Servicios dependen de proveedores externos (AWS, Meta, OpenAI, entre otros).</li>
-      <li>GBamboo no es responsable por decisiones comerciales tomadas por el cliente con base en la información generada por los sistemas (reportes, analytics, respuestas del chatbot).</li>
-      <li>El cliente es responsable de obtener el consentimiento necesario de sus propios usuarios finales para el tratamiento de sus datos personales, conforme se detalla en el Aviso de Privacidad.</li>
-    </ul>
+      <h3>6. Limitación de responsabilidad</h3>
+      <ul>
+        <li>GBamboo se compromete a operar los Servicios con estándares profesionales de seguridad y disponibilidad, pero no garantiza disponibilidad ininterrumpida al 100%, dado que los Servicios dependen de proveedores externos (AWS, Meta, OpenAI, entre otros).</li>
+        <li>GBamboo no es responsable por decisiones comerciales tomadas por el cliente con base en la información generada por los sistemas (reportes, analytics, respuestas del chatbot).</li>
+        <li>El cliente es responsable de obtener el consentimiento necesario de sus propios usuarios finales para el tratamiento de sus datos personales, conforme se detalla en el Aviso de Privacidad.</li>
+      </ul>
 
-    <h3>7. Vigencia y modificaciones</h3>
-    <p>GBamboo podrá modificar estos Términos y Condiciones en cualquier momento. Los cambios se publicarán en este sitio web con su fecha de actualización. El uso continuado de los Servicios tras la publicación de cambios implica su aceptación.</p>
+      <h3>7. Vigencia y modificaciones</h3>
+      <p>GBamboo podrá modificar estos Términos y Condiciones en cualquier momento. Los cambios se publicarán en este sitio web con su fecha de actualización. El uso continuado de los Servicios tras la publicación de cambios implica su aceptación.</p>
 
-    <h3>8. Legislación aplicable</h3>
-    <p>Estos Términos se rigen por las leyes de los Estados Unidos Mexicanos, incluyendo la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y su Reglamento. Cualquier controversia se someterá a los tribunales competentes en Jalisco, México.</p>
+      <h3>8. Legislación aplicable</h3>
+      <p>Estos Términos se rigen por las leyes de los Estados Unidos Mexicanos, incluyendo la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) y su Reglamento. Cualquier controversia se someterá a los tribunales competentes en Jalisco, México.</p>
 
-    <hr class="legal-divider">
+      <hr class="legal-divider">
 
-    <h2 class="display" style="font-size:clamp(24px,3.4vw,32px);">Aviso de Privacidad Integral</h2>
-    <p>En cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), GBamboo pone a disposición el presente Aviso de Privacidad.</p>
+      <h2 class="display" style="font-size:clamp(24px,3.4vw,32px);">Aviso de Privacidad Integral</h2>
+      <p>En cumplimiento de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), GBamboo pone a disposición el presente Aviso de Privacidad.</p>
 
-    <h3>1. Identidad y domicilio del responsable</h3>
-    <p><strong>GBamboo</strong> es responsable del tratamiento de los datos personales recabados a través de su sitio web GBamboo.net y de los sistemas que administra para sus clientes. Contacto para temas de privacidad: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+      <h3>1. Identidad y domicilio del responsable</h3>
+      <p><strong>GBamboo</strong> es responsable del tratamiento de los datos personales recabados a través de su sitio web GBamboo.net y de los sistemas que administra para sus clientes. Contacto para temas de privacidad: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
 
-    <h3>2. Datos personales que recabamos</h3>
-    <h4>a) De nuestros clientes (empresas que contratan Servicios)</h4>
-    <ul>
-      <li>Datos de contacto: nombre, correo electrónico, teléfono, empresa, puesto.</li>
-      <li>Datos de facturación.</li>
-      <li>Información del negocio necesaria para configurar los sistemas (procesos internos, catálogos, políticas de atención).</li>
-    </ul>
-    <h4>b) De los usuarios finales que interactúan con los sistemas de nuestros clientes</h4>
-    <p>Cuando una persona interactúa con un chatbot, formulario web o sistema de agendamiento configurado por GBamboo para uno de nuestros clientes, podemos recabar:</p>
-    <ul>
-      <li>Nombre, número de teléfono o cuenta de WhatsApp/Instagram.</li>
-      <li>Contenido de las conversaciones sostenidas con el agente de chat.</li>
-      <li>Correo electrónico (si se proporciona para agendar citas o recibir información).</li>
-      <li>Preferencias e información proporcionada durante la conversación, utilizada para personalizar la atención (por ejemplo: intereses, historial de solicitudes, respuestas a preguntas de calificación de lead).</li>
-      <li>Metadatos técnicos (fecha, hora, canal de contacto).</li>
-    </ul>
-    <p><strong>Importante:</strong> GBamboo trata estos datos en su carácter de <strong>encargado</strong> del tratamiento, actuando por cuenta y bajo instrucciones de nuestro cliente (la empresa con la que el usuario final interactúa), quien es el responsable principal de dicha relación. Cada cliente de GBamboo es responsable de contar con su propio aviso de privacidad frente a sus usuarios finales, y GBamboo se compromete a tratar esos datos únicamente para los fines que el cliente autorice.</p>
+      <h3>2. Datos personales que recabamos</h3>
+      <h4>a) De nuestros clientes (empresas que contratan Servicios)</h4>
+      <ul>
+        <li>Datos de contacto: nombre, correo electrónico, teléfono, empresa, puesto.</li>
+        <li>Datos de facturación.</li>
+        <li>Información del negocio necesaria para configurar los sistemas (procesos internos, catálogos, políticas de atención).</li>
+      </ul>
+      <h4>b) De los usuarios finales que interactúan con los sistemas de nuestros clientes</h4>
+      <p>Cuando una persona interactúa con un chatbot, formulario web o sistema de agendamiento configurado por GBamboo para uno de nuestros clientes, podemos recabar:</p>
+      <ul>
+        <li>Nombre, número de teléfono o cuenta de WhatsApp/Instagram.</li>
+        <li>Contenido de las conversaciones sostenidas con el agente de chat.</li>
+        <li>Correo electrónico (si se proporciona para agendar citas o recibir información).</li>
+        <li>Preferencias e información proporcionada durante la conversación, utilizada para personalizar la atención (por ejemplo: intereses, historial de solicitudes, respuestas a preguntas de calificación de lead).</li>
+        <li>Metadatos técnicos (fecha, hora, canal de contacto).</li>
+      </ul>
+      <p><strong>Importante:</strong> GBamboo trata estos datos en su carácter de <strong>encargado</strong> del tratamiento, actuando por cuenta y bajo instrucciones de nuestro cliente (la empresa con la que el usuario final interactúa), quien es el responsable principal de dicha relación. Cada cliente de GBamboo es responsable de contar con su propio aviso de privacidad frente a sus usuarios finales, y GBamboo se compromete a tratar esos datos únicamente para los fines que el cliente autorice.</p>
 
-    <h3>3. Finalidades del tratamiento</h3>
-    <p><strong>Finalidades primarias (necesarias para el Servicio):</strong></p>
-    <ul>
-      <li>Prestar y operar los Servicios contratados (hosting, chatbot, CRM, integraciones).</li>
-      <li>Dar seguimiento y soporte técnico.</li>
-      <li>Personalizar la atención brindada por los agentes de chat inteligente (por ejemplo, recordar el contexto de una conversación o preferencias previas del usuario).</li>
-      <li>Facturación y cumplimiento de obligaciones fiscales.</li>
-    </ul>
-    <p><strong>Finalidades secundarias (opcionales):</strong></p>
-    <ul>
-      <li>Envío de comunicaciones sobre nuevos servicios o mejoras.</li>
-      <li>Elaboración de reportes estadísticos y analíticos agregados (sin identificar a personas individuales).</li>
-    </ul>
-    <p>El usuario puede oponerse a las finalidades secundarias en cualquier momento escribiendo a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a>.</p>
+      <h3>3. Finalidades del tratamiento</h3>
+      <p><strong>Finalidades primarias (necesarias para el Servicio):</strong></p>
+      <ul>
+        <li>Prestar y operar los Servicios contratados (hosting, chatbot, CRM, integraciones).</li>
+        <li>Dar seguimiento y soporte técnico.</li>
+        <li>Personalizar la atención brindada por los agentes de chat inteligente (por ejemplo, recordar el contexto de una conversación o preferencias previas del usuario).</li>
+        <li>Facturación y cumplimiento de obligaciones fiscales.</li>
+      </ul>
+      <p><strong>Finalidades secundarias (opcionales):</strong></p>
+      <ul>
+        <li>Envío de comunicaciones sobre nuevos servicios o mejoras.</li>
+        <li>Elaboración de reportes estadísticos y analíticos agregados (sin identificar a personas individuales).</li>
+      </ul>
+      <p>El usuario puede oponerse a las finalidades secundarias en cualquier momento escribiendo a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a>.</p>
 
-    <h3>4. Transferencias y encargados de tratamiento</h3>
-    <p>Para operar los Servicios, GBamboo utiliza proveedores tecnológicos que procesan datos como parte de la infraestructura (encargados de tratamiento), entre ellos:</p>
-    <ul>
-      <li><strong>Amazon Web Services (AWS):</strong> hosting, almacenamiento y respaldo de datos.</li>
-      <li><strong>OpenAI (ChatGPT):</strong> procesamiento de lenguaje natural para generar respuestas del agente de chat.</li>
-      <li><strong>Meta (WhatsApp Business, Instagram):</strong> transmisión de mensajes a través de sus plataformas.</li>
-    </ul>
-    <p>Estos proveedores procesan la información únicamente para permitir la operación del Servicio y están sujetos a sus propias políticas de privacidad y estándares de seguridad. GBamboo no vende ni renta datos personales a terceros con fines publicitarios.</p>
+      <h3>4. Transferencias y encargados de tratamiento</h3>
+      <p>Para operar los Servicios, GBamboo utiliza proveedores tecnológicos que procesan datos como parte de la infraestructura (encargados de tratamiento), entre ellos:</p>
+      <ul>
+        <li><strong>Amazon Web Services (AWS):</strong> hosting, almacenamiento y respaldo de datos.</li>
+        <li><strong>OpenAI (ChatGPT):</strong> procesamiento de lenguaje natural para generar respuestas del agente de chat.</li>
+        <li><strong>Meta (WhatsApp Business, Instagram):</strong> transmisión de mensajes a través de sus plataformas.</li>
+      </ul>
+      <p>Estos proveedores procesan la información únicamente para permitir la operación del Servicio y están sujetos a sus propias políticas de privacidad y estándares de seguridad. GBamboo no vende ni renta datos personales a terceros con fines publicitarios.</p>
 
-    <h3>5. Almacenamiento y seguridad</h3>
-    <p>Los datos se almacenan en servidores con cifrado, respaldo automático y controles de acceso. Se conservan durante la vigencia de la relación contractual con el cliente correspondiente y, posteriormente, durante el plazo que exijan las obligaciones legales aplicables, salvo solicitud de cancelación por parte del titular.</p>
+      <h3>5. Almacenamiento y seguridad</h3>
+      <p>Los datos se almacenan en servidores con cifrado, respaldo automático y controles de acceso. Se conservan durante la vigencia de la relación contractual con el cliente correspondiente y, posteriormente, durante el plazo que exijan las obligaciones legales aplicables, salvo solicitud de cancelación por parte del titular.</p>
 
-    <h3>6. Derechos ARCO</h3>
-    <p>El titular de los datos (cliente o usuario final) tiene derecho a <strong>Acceder, Rectificar, Cancelar u Oponerse</strong> (derechos ARCO) al tratamiento de sus datos personales, así como a revocar su consentimiento en cualquier momento. Para ejercer estos derechos, puede escribir a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a> indicando:</p>
-    <ul>
-      <li>Nombre completo y datos de contacto.</li>
-      <li>Descripción clara del dato personal sobre el cual se ejerce el derecho.</li>
-      <li>Documento que acredite su identidad, en su caso.</li>
-    </ul>
-    <p>GBamboo responderá en un plazo no mayor a 20 días hábiles, conforme lo establece la LFPDPPP. Cuando el dato haya sido recabado a través de un sistema operado para un cliente específico, GBamboo podrá canalizar la solicitud al cliente responsable cuando corresponda, y así lo notificará al titular.</p>
+      <h3>6. Derechos ARCO</h3>
+      <p>El titular de los datos (cliente o usuario final) tiene derecho a <strong>Acceder, Rectificar, Cancelar u Oponerse</strong> (derechos ARCO) al tratamiento de sus datos personales, así como a revocar su consentimiento en cualquier momento. Para ejercer estos derechos, puede escribir a <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a> indicando:</p>
+      <ul>
+        <li>Nombre completo y datos de contacto.</li>
+        <li>Descripción clara del dato personal sobre el cual se ejerce el derecho.</li>
+        <li>Documento que acredite su identidad, en su caso.</li>
+      </ul>
+      <p>GBamboo responderá en un plazo no mayor a 20 días hábiles, conforme lo establece la LFPDPPP. Cuando el dato haya sido recabado a través de un sistema operado para un cliente específico, GBamboo podrá canalizar la solicitud al cliente responsable cuando corresponda, y así lo notificará al titular.</p>
 
-    <h3>7. Uso de cookies y tecnologías de rastreo</h3>
-    <p>El sitio web GBamboo.net puede utilizar cookies y tecnologías similares (por ejemplo, Google Analytics) para mejorar la experiencia de navegación y analizar el uso del sitio. El usuario puede deshabilitar las cookies desde la configuración de su navegador; esto podría afectar algunas funcionalidades del sitio.</p>
+      <h3>7. Uso de cookies y tecnologías de rastreo</h3>
+      <p>El sitio web GBamboo.net puede utilizar cookies y tecnologías similares (por ejemplo, Google Analytics) para mejorar la experiencia de navegación y analizar el uso del sitio. El usuario puede deshabilitar las cookies desde la configuración de su navegador; esto podría afectar algunas funcionalidades del sitio.</p>
 
-    <h3>8. Cambios al Aviso de Privacidad</h3>
-    <p>Este Aviso de Privacidad puede actualizarse para reflejar cambios en nuestros Servicios, en la legislación aplicable o en las prácticas de nuestros proveedores. La versión vigente estará siempre disponible en GBamboo.net.</p>
+      <h3>8. Cambios al Aviso de Privacidad</h3>
+      <p>Este Aviso de Privacidad puede actualizarse para reflejar cambios en nuestros Servicios, en la legislación aplicable o en las prácticas de nuestros proveedores. La versión vigente estará siempre disponible en GBamboo.net.</p>
 
-    <h3>9. Contacto</h3>
-    <p>Para dudas, solicitudes o ejercicio de derechos ARCO relacionados con el tratamiento de datos personales:<br>
-    Correo electrónico: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a><br>
-    Sitio web: gbamboo.net</p>
+      <h3>9. Contacto</h3>
+      <p>Para dudas, solicitudes o ejercicio de derechos ARCO relacionados con el tratamiento de datos personales:<br>
+      Correo electrónico: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a><br>
+      Sitio web: gbamboo.net</p>
+    </div>
 
-    
+    <!-- ================= ENGLISH ================= -->
+    <div class="legal-lang lang-en">
+      <h2 class="display">Terms and Conditions</h2>
+      <span class="legal-updated mono">Last updated: July 2026</span>
+
+      <p><strong>GBamboo</strong> — Digital Automation with Artificial Intelligence. Website: gbamboo.net | Contact: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+
+      <h3>1. Purpose</h3>
+      <p>These Terms and Conditions govern access to and use of the GBamboo.net website, as well as the engagement of our digital automation services, intelligent chat agents, CRM systems, integrations, and related developments (collectively, the "Services"). By accessing the site or engaging any Service, the user or client accepts these Terms in full. If you do not agree, you must refrain from using the site or engaging the Services.</p>
+
+      <h3>2. Description of the Services</h3>
+      <p>GBamboo offers, among others:</p>
+      <ul>
+        <li>Website development, hosting, and domain services.</li>
+        <li>Intelligent chat agents (WhatsApp, Instagram, website) powered by artificial intelligence.</li>
+        <li>Customer relationship management (CRM) platforms.</li>
+        <li>Integrations with third-party systems (CRM, ERP, accounting, HR).</li>
+        <li>Analytics, reporting, and workflow automation.</li>
+      </ul>
+      <p>The specific scope of each Service is defined in the commercial proposal and/or contract signed with each client.</p>
+
+      <h3>3. Accounts and permitted use</h3>
+      <ul>
+        <li>The client is responsible for the accuracy of the information provided for the delivery of the Service.</li>
+        <li>The client agrees not to use the Services for unlawful or fraudulent purposes, or purposes that infringe the rights of third parties.</li>
+        <li>Use of the intelligent chat agents to distribute spam or misleading or discriminatory content, or content that violates the policies of the integrated platforms (Meta, WhatsApp Business, etc.), is prohibited.</li>
+      </ul>
+
+      <h3>4. Intellectual property and system licensing</h3>
+      <ul>
+        <li>The source code, technical configuration, automation models, and architecture of the systems developed by GBamboo (chatbots, CRM, workflows) are the <strong>property of GBamboo</strong>, unless otherwise agreed in writing.</li>
+        <li>The client receives a <strong>license to use</strong> the system while their monthly subscription remains active and paid up to date.</li>
+        <li>The <strong>client's own data</strong> (contacts, conversation history, information captured in the CRM) belongs to the client and can be exported in standard formats (CSV/Excel/JSON) at any time and, in any case, upon termination of the contractual relationship.</li>
+        <li>Upon termination or breach of the monthly service contract, operational access to the system is suspended. A buyout option for the system is available as agreed in the corresponding service contract.</li>
+      </ul>
+
+      <h3>5. Information collection</h3>
+      <p>GBamboo collects information both from its <strong>direct clients</strong> (the companies that engage the Services) and from the <strong>end users</strong> who interact with the systems it develops (for example, people who message a WhatsApp chatbot configured for a GBamboo client). Details on what information is collected, how it is used, and how it is protected are described in our Privacy Notice below.</p>
+
+      <h3>6. Limitation of liability</h3>
+      <ul>
+        <li>GBamboo is committed to operating the Services under professional security and availability standards, but does not guarantee 100% uninterrupted availability, since the Services depend on external providers (AWS, Meta, OpenAI, among others).</li>
+        <li>GBamboo is not responsible for business decisions made by the client based on information generated by the systems (reports, analytics, chatbot responses).</li>
+        <li>The client is responsible for obtaining the necessary consent from its own end users for the processing of their personal data, as detailed in the Privacy Notice.</li>
+      </ul>
+
+      <h3>7. Term and modifications</h3>
+      <p>GBamboo may modify these Terms and Conditions at any time. Changes will be published on this website with their update date. Continued use of the Services after changes are published constitutes acceptance of them.</p>
+
+      <h3>8. Governing law</h3>
+      <p>These Terms are governed by the laws of the United Mexican States, including the Federal Law on the Protection of Personal Data Held by Private Parties (LFPDPPP) and its Regulations. Any dispute shall be submitted to the competent courts of Jalisco, Mexico.</p>
+
+      <hr class="legal-divider">
+
+      <h2 class="display" style="font-size:clamp(24px,3.4vw,32px);">Comprehensive Privacy Notice</h2>
+      <p>In compliance with the Federal Law on the Protection of Personal Data Held by Private Parties (LFPDPPP), GBamboo makes this Privacy Notice available.</p>
+
+      <h3>1. Identity and address of the data controller</h3>
+      <p><strong>GBamboo</strong> is responsible for the processing of personal data collected through its website GBamboo.net and the systems it manages for its clients. Privacy contact: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a></p>
+
+      <h3>2. Personal data we collect</h3>
+      <h4>a) From our clients (companies that engage the Services)</h4>
+      <ul>
+        <li>Contact details: name, email address, phone number, company, job title.</li>
+        <li>Billing information.</li>
+        <li>Business information needed to configure the systems (internal processes, catalogs, customer service policies).</li>
+      </ul>
+      <h4>b) From end users who interact with our clients' systems</h4>
+      <p>When a person interacts with a chatbot, web form, or scheduling system configured by GBamboo for one of our clients, we may collect:</p>
+      <ul>
+        <li>Name, phone number, or WhatsApp/Instagram account.</li>
+        <li>Content of the conversations held with the chat agent.</li>
+        <li>Email address (if provided to schedule appointments or receive information).</li>
+        <li>Preferences and information provided during the conversation, used to personalize the experience (for example: interests, request history, answers to lead qualification questions).</li>
+        <li>Technical metadata (date, time, contact channel).</li>
+      </ul>
+      <p><strong>Important:</strong> GBamboo processes this data in its capacity as a data <strong>processor</strong>, acting on behalf of and under the instructions of our client (the company the end user interacts with), who is the primary controller of that relationship. Each GBamboo client is responsible for having its own privacy notice for its end users, and GBamboo commits to processing that data only for the purposes authorized by the client.</p>
+
+      <h3>3. Purposes of processing</h3>
+      <p><strong>Primary purposes (necessary for the Service):</strong></p>
+      <ul>
+        <li>Providing and operating the contracted Services (hosting, chatbot, CRM, integrations).</li>
+        <li>Follow-up and technical support.</li>
+        <li>Personalizing the experience delivered by the intelligent chat agents (for example, remembering the context of a conversation or the user's previous preferences).</li>
+        <li>Billing and compliance with tax obligations.</li>
+      </ul>
+      <p><strong>Secondary purposes (optional):</strong></p>
+      <ul>
+        <li>Sending communications about new services or improvements.</li>
+        <li>Preparing aggregated statistical and analytical reports (without identifying individual persons).</li>
+      </ul>
+      <p>The user may object to the secondary purposes at any time by writing to <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a>.</p>
+
+      <h3>4. Transfers and data processors</h3>
+      <p>To operate the Services, GBamboo uses technology providers that process data as part of the infrastructure (data processors), including:</p>
+      <ul>
+        <li><strong>Amazon Web Services (AWS):</strong> hosting, storage, and data backup.</li>
+        <li><strong>OpenAI (ChatGPT):</strong> natural language processing to generate chat agent responses.</li>
+        <li><strong>Meta (WhatsApp Business, Instagram):</strong> message transmission through their platforms.</li>
+      </ul>
+      <p>These providers process the information solely to enable the operation of the Service and are subject to their own privacy policies and security standards. GBamboo does not sell or rent personal data to third parties for advertising purposes.</p>
+
+      <h3>5. Storage and security</h3>
+      <p>Data is stored on servers with encryption, automatic backup, and access controls. It is retained for the duration of the contractual relationship with the corresponding client and, thereafter, for the period required by applicable legal obligations, unless the data subject requests deletion.</p>
+
+      <h3>6. ARCO rights</h3>
+      <p>The data subject (client or end user) has the right to <strong>Access, Rectify, Cancel, or Object</strong> (ARCO rights) to the processing of their personal data, as well as to revoke their consent at any time. To exercise these rights, they may write to <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a> indicating:</p>
+      <ul>
+        <li>Full name and contact details.</li>
+        <li>A clear description of the personal data over which the right is exercised.</li>
+        <li>A document proving their identity, where applicable.</li>
+      </ul>
+      <p>GBamboo will respond within no more than 20 business days, as established by the LFPDPPP. When the data was collected through a system operated for a specific client, GBamboo may forward the request to the responsible client where appropriate, and will notify the data subject accordingly.</p>
+
+      <h3>7. Use of cookies and tracking technologies</h3>
+      <p>The GBamboo.net website may use cookies and similar technologies (for example, Google Analytics) to improve the browsing experience and analyze site usage. Users can disable cookies in their browser settings; this may affect some site functionality.</p>
+
+      <h3>8. Changes to the Privacy Notice</h3>
+      <p>This Privacy Notice may be updated to reflect changes in our Services, in applicable legislation, or in our providers' practices. The current version will always be available at GBamboo.net.</p>
+
+      <h3>9. Contact</h3>
+      <p>For questions, requests, or the exercise of ARCO rights related to the processing of personal data:<br>
+      Email: <a class="legal-link" href="mailto:social@gbamboo.net">social@gbamboo.net</a><br>
+      Website: gbamboo.net</p>
+    </div>
+
   </div>
 </div>
 
 <script>
+  /* ---------- LEGAL MODAL ---------- */
   (function(){
     var overlay = document.getElementById('legalOverlay');
     var tabBtn = document.getElementById('legalTabBtn');
@@ -1082,8 +1254,165 @@
       if(e.key === 'Escape' && overlay.classList.contains('open')) closeLegal();
     });
   })();
+
+  /* ---------- LANGUAGE SWITCHER (ES / EN) ---------- */
+  (function(){
+    var I18N = {
+      es: {
+        _title: 'GBamboo — Automatización Inteligente. Resultados Globales.',
+        nav_services: 'Servicios',
+        nav_process: 'Proceso',
+        nav_about: 'Nosotros',
+        nav_contact: 'Contacto',
+        nav_cta: 'Hablemos',
+        hero_eyebrow: 'Global Bamboo &middot; IA &amp; Infraestructura Web',
+        hero_h1: 'Automatización<br><span class="accent">Inteligente.</span><br>Resultados<br>Globales.',
+        hero_lead: 'Implementamos inteligencia artificial dentro de tu operación y dejamos tu sitio web y alojamiento funcionando como deben: rápidos, estables y listos para crecer.',
+        hero_btn1: 'Agenda una consultoría →',
+        hero_btn2: 'Ver servicios',
+        stat1_lab: 'Crecimiento de tu proyecto como el bambú en un dia*',
+        stat2_lab: 'Soporte e infraestructura monitoreada',
+        why_tag: 'Por qué bambú',
+        why_h3: 'La planta que crece más rápido en la tierra, ahora es nuestro método.',
+        why_p1: 'El bambú no improvisa su crecimiento: construye una raíz subterránea sólida antes de que algo sea visible en la superficie. Así trabajamos nosotros con la IA dentro de tu empresa.',
+        why_p2: 'Primero ordenamos los procesos, datos e infraestructura. Después, los resultados aparecen rápido — y se sostienen.',
+        ws1: 'Hectáreas de bambú en el planeta: la materia prima de la escalabilidad.',
+        ws2: 'Años para que un bosque de bambú llegue a su madurez total.',
+        ws3: 'Oxígeno liberado vs. otras plantas de tamaño similar.',
+        ws4: 'De nuestros proyectos incluyen monitoreo posterior al lanzamiento.',
+        srv_tag: 'Servicios',
+        srv_h2: 'Tres raíces, un mismo sistema.',
+        srv_p: 'No vendemos herramientas sueltas. Diseñamos la base técnica completa para que la inteligencia artificial funcione dentro de tu negocio sin fricción.',
+        s1_h: 'Automatización con IA',
+        s1_p: 'Diagnosticamos tus procesos repetitivos y diseñamos agentes y flujos automatizados que ahorran horas operativas reales, conectados a las herramientas que ya usas.',
+        s2_h: 'Sitios web a la medida',
+        s2_p: 'Configuramos y dejamos listo tu sitio web: estructura, velocidad de carga, integraciones y seguimiento. Tú apruebas, nosotros configuramos.',
+        s3_h: 'Alojamiento y soporte',
+        s3_p: 'Hosting gestionado, dominios, certificados y monitoreo continuo. Si algo se cae, lo vemos antes que tú — y lo resolvemos.',
+        proc_tag: 'Cómo trabajamos',
+        proc_h2: 'Crecimiento por nudos, no de golpe.',
+        proc_p: 'Igual que el tallo del bambú avanza nudo por nudo, cada etapa se cierra antes de abrir la siguiente — sin sorpresas a mitad de proyecto.',
+        p1_num: '01 · Raíz', p1_h: 'Diagnóstico',
+        p1_p: 'Auditamos procesos, sitio actual e infraestructura para identificar dónde la IA aporta más.',
+        p2_num: '02 · Tallo', p2_h: 'Implementación',
+        p2_p: 'Configuramos automatizaciones, sitio y hosting con pruebas en cada paso del camino.',
+        p3_num: '03 · Brote', p3_h: 'Lanzamiento',
+        p3_p: 'Salimos a producción con monitoreo activo desde el primer minuto.',
+        p4_num: '04 · Bosque', p4_h: 'Crecimiento',
+        p4_p: 'Acompañamos, ajustamos y escalamos a medida que tu operación lo requiere.',
+        panel_h3: 'Global Bamboo: una sola raíz, resultados en cualquier mercado.',
+        panel_p: 'Trabajamos con empresas que quieren adoptar IA sin perder el control de su operación, y necesitan que su presencia web sea tan sólida como su estrategia. Un equipo, un mismo estándar técnico, sin importar el tamaño del proyecto.',
+        cta_tag: 'Empecemos',
+        cta_h2: '¿Listo para que tu operación crezca como bambú?',
+        cta_p: 'Agenda una consultoría sin costo y te decimos, con honestidad, en dónde la IA va a tener más impacto en tu negocio.',
+        cta_btn: 'Escríbenos a contacto@gbamboo.net →',
+        f_services: 'Servicios',
+        f_s1: 'Automatización con IA',
+        f_s2: 'Sitios web',
+        f_s3: 'Alojamiento y soporte',
+        f_company: 'Empresa',
+        f_contact: 'Contacto',
+        f_ig: 'Síguenos en Instagram',
+        f_copy: '© 2026 GBamboo · Global Bamboo. Todos los derechos reservados.',
+        f_tag: 'Automatización inteligente. Resultados globales.',
+        f_legal: 'Términos, Condiciones y Aviso de Privacidad',
+        legal_tab: 'Términos y Condiciones',
+        legal_close: 'Cerrar'
+      },
+      en: {
+        _title: 'GBamboo — Intelligent Automation. Global Results.',
+        nav_services: 'Services',
+        nav_process: 'Process',
+        nav_about: 'About Us',
+        nav_contact: 'Contact',
+        nav_cta: "Let's Talk",
+        hero_eyebrow: 'Global Bamboo &middot; AI &amp; Web Infrastructure',
+        hero_h1: 'Intelligent<br><span class="accent">Automation.</span><br>Global<br>Results.',
+        hero_lead: 'We implement artificial intelligence inside your operation and get your website and hosting working the way they should: fast, stable, and ready to grow.',
+        hero_btn1: 'Book a consultation →',
+        hero_btn2: 'View services',
+        stat1_lab: 'Your project grows like bamboo in a single day*',
+        stat2_lab: 'Support and monitored infrastructure',
+        why_tag: 'Why bamboo',
+        why_h3: 'The fastest-growing plant on Earth is now our method.',
+        why_p1: "Bamboo doesn't improvise its growth: it builds a solid underground root system before anything is visible on the surface. That's exactly how we work with AI inside your company.",
+        why_p2: 'First we organize your processes, data, and infrastructure. Then the results show up fast — and they last.',
+        ws1: 'Hectares of bamboo on the planet: the raw material of scalability.',
+        ws2: 'Years for a bamboo forest to reach full maturity.',
+        ws3: 'Oxygen released vs. other plants of similar size.',
+        ws4: 'Of our projects include post-launch monitoring.',
+        srv_tag: 'Services',
+        srv_h2: 'Three roots, one system.',
+        srv_p: "We don't sell standalone tools. We design the complete technical foundation so artificial intelligence works inside your business without friction.",
+        s1_h: 'AI Automation',
+        s1_p: 'We diagnose your repetitive processes and design automated agents and workflows that save real operating hours, connected to the tools you already use.',
+        s2_h: 'Custom Websites',
+        s2_p: 'We set up and deliver your website ready to go: structure, load speed, integrations, and tracking. You approve, we configure.',
+        s3_h: 'Hosting & Support',
+        s3_p: "Managed hosting, domains, certificates, and continuous monitoring. If something goes down, we see it before you do — and we fix it.",
+        proc_tag: 'How we work',
+        proc_h2: 'Growth node by node, not all at once.',
+        proc_p: "Just as a bamboo stalk grows node by node, each stage is closed before the next one opens — no surprises halfway through the project.",
+        p1_num: '01 · Root', p1_h: 'Diagnosis',
+        p1_p: 'We audit your processes, current site, and infrastructure to identify where AI adds the most value.',
+        p2_num: '02 · Stalk', p2_h: 'Implementation',
+        p2_p: 'We configure automations, website, and hosting with testing at every step of the way.',
+        p3_num: '03 · Shoot', p3_h: 'Launch',
+        p3_p: 'We go live with active monitoring from the very first minute.',
+        p4_num: '04 · Forest', p4_h: 'Growth',
+        p4_p: 'We support, adjust, and scale as your operation requires it.',
+        panel_h3: 'Global Bamboo: one root, results in any market.',
+        panel_p: 'We work with companies that want to adopt AI without losing control of their operation, and need a web presence as solid as their strategy. One team, one technical standard, no matter the size of the project.',
+        cta_tag: "Let's get started",
+        cta_h2: 'Ready for your operation to grow like bamboo?',
+        cta_p: "Book a free consultation and we'll tell you, honestly, where AI will have the biggest impact on your business.",
+        cta_btn: 'Write to us at contacto@gbamboo.net →',
+        f_services: 'Services',
+        f_s1: 'AI Automation',
+        f_s2: 'Websites',
+        f_s3: 'Hosting & Support',
+        f_company: 'Company',
+        f_contact: 'Contact',
+        f_ig: 'Follow us on Instagram',
+        f_copy: '© 2026 GBamboo · Global Bamboo. All rights reserved.',
+        f_tag: 'Intelligent automation. Global results.',
+        f_legal: 'Terms, Conditions & Privacy Notice',
+        legal_tab: 'Terms and Conditions',
+        legal_close: 'Close'
+      }
+    };
+
+    var esBtn = document.getElementById('langEsBtn');
+    var enBtn = document.getElementById('langEnBtn');
+    var closeBtn = document.getElementById('legalCloseBtn');
+
+    function setLang(lang){
+      var dict = I18N[lang];
+      if(!dict) return;
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('data-lang', lang);
+      document.title = dict._title;
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var key = el.getAttribute('data-i18n');
+        if(dict[key] !== undefined) el.innerHTML = dict[key];
+      });
+      closeBtn.setAttribute('aria-label', dict.legal_close);
+      esBtn.classList.toggle('active', lang === 'es');
+      enBtn.classList.toggle('active', lang === 'en');
+      esBtn.setAttribute('aria-pressed', lang === 'es');
+      enBtn.setAttribute('aria-pressed', lang === 'en');
+      try { localStorage.setItem('gbamboo-lang', lang); } catch(e){}
+    }
+
+    esBtn.addEventListener('click', function(){ setLang('es'); });
+    enBtn.addEventListener('click', function(){ setLang('en'); });
+
+    /* restore saved preference (defaults to Spanish) */
+    var saved = 'es';
+    try { saved = localStorage.getItem('gbamboo-lang') || 'es'; } catch(e){}
+    setLang(saved);
+  })();
 </script>
-<!-- ---------- Se realizaron algunos cambios agregando los terminos y condiciones  ---------- -->
+<!-- ---------- Se agregó el selector de idioma ES/EN con traducción completa de la página ---------- -->
 </body>
 </html>
- 
